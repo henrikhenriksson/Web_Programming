@@ -19,6 +19,10 @@
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
     <script src="./js/main.js"></script>
     <link rel="icon" href="./img/icon.png" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <title>Project Touch</title>
   </head>
   <body>
@@ -68,11 +72,24 @@
           <section id="input_Box">
             <input type="text" id="user_input" placeholder="Type Here..." />
           </section>
-          <section id="run_Control"></section>
-          <section class="statistics" id="text_Details">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus sed
-            cupiditate mollitia error in fugiat accusamus quasi qui. Facere,
-            alias.
+          <section id="run_Control">
+            <button type="play" id="play_Button">
+              <i class="material-icons md-48 md-green" id="play_Icon">
+                play_arrow
+              </i>
+            </button>
+          </section>
+          <section class="statistics">
+            <table class="stat_Table">
+              <tr>
+                <td id="gross_Wpm">Gross WPM: <span  id="GWPMD">56</span></td>
+                <td id="Accuracy">Accuracy: <span id="Acc_Data">93 %</span></td>
+              </tr>
+              <tr>
+                <td id="net_Wpm">Net WPM: <span id="NWPMD">38<span></td>
+                <td>Errors: <span id="error_Data">12</span></td>
+              </tr>
+            </table>
           </section>
         </section>
       </section>

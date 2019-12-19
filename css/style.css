@@ -107,12 +107,14 @@ select::-ms-expand {
 #text_Selector {
   text-align: left;
   border: 2px solid gold;
+  text-align: center;
   color: black;
   border-radius: 10px;
   background: rgb(207, 214, 207, 0.8);
   padding: 5px;
   width: fit-content;
 }
+
 /* -------------------------------------------------------------------------- */
 
 #input_Box {
@@ -159,3 +161,64 @@ select::-ms-expand {
   color: transparent;
 }
 /* -------------------------------------------------------------------------- */
+.material-icons {
+  /* font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  *//* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+.material-icons.md-48 {
+  font-size: 48px;
+}
+.material-icons.md-green {
+  color: green;
+}
+.material-icons.md-red {
+  color: red;
+}
+#play_Button {
+  border: 2px solid gold;
+  background: rgba(211, 168, 27, 0.8);
+  border-radius: 10px;
+  margin: auto;
+  height: auto;
+  width: fit-content;
+  display: inline-block;
+  align-content: center;
+}
+/* -------------------------------------------------------------------------- */
+.statistics {
+  margin-top: 48px;
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.3);
+  width: fit-content;
+}
+.stat_Table {
+}
+.stat_Table td {
+  font-weight: bold;
+  color: silver;
+  padding-right: 20px;
+  text-align: right;
+  padding: 5px;
+}
+.stat_Table td span {
+  color: gold;
+}
