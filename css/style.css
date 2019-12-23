@@ -1,6 +1,6 @@
 /*
     File:       style.css
-    Author:     Henrik Henriksson 
+    Author:     Henrik Henriksson
     Student ID: hehe0601¨
     Contact:    hehe0601@student.miun.se
     Version:    1.0
@@ -15,38 +15,39 @@ html {
 
 body {
   min-height: 100%;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Girassol', cursive;
   position: relative;
   max-width: 600px;
   margin: auto;
   text-align: center;
   background-image: url(../img/background.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 /* -------------------------------------------------------------------------- */
 /* header section */
 /* -------------------------------------------------------------------------- */
 header {
+  border-bottom: darkgrey 3px solid;
+  min-height: 70px;
   padding-top: 30px;
   padding-bottom: 30px;
-  min-height: 70px;
-  border-bottom: darkgrey 3px solid;
-  /* background: rgb(207, 214, 207, 0.1); */
 }
 
 header #brand {
   display: inline-block;
-  font-variant: small-caps;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   color: gold;
+  font-variant: small-caps;
+  font-family: 'Exo 2', sans-serif;
   font-size: 36px;
-  padding-left: 0px;
-  margin-top: 0px;
   margin-bottom: 10px;
+  margin-top: 0;
+  padding-left: 0;
 }
 header .highlight {
-  font-variant: small-caps;
   color: silver;
   font-size: 48px;
+  font-variant: small-caps;
 }
 
 header #logo {
@@ -57,46 +58,47 @@ header #logo {
 /* footer section */
 /* -------------------------------------------------------------------------- */
 footer {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  font-variant: small-caps;
-  font-size: small;
-  text-align: center;
-  color: gold;
   border-top: darkgrey 3px solid;
+  bottom: 0;
+  color: gold;
+  font-size: small;
+  font-variant: small-caps;
+  position: absolute;
+  text-align: center;
+  width: 100%;
 }
 
 footer a {
-  text-decoration: none;
   color: silver;
+  text-decoration: none;
 }
 /* -------------------------------------------------------------------------- */
 /* main section of the body */
 /* -------------------------------------------------------------------------- */
 main {
-  min-height: 700px;
-  height: fit-content;
-  padding-top: 20px;
-  padding-bottom: 20px;
   color: goldenrod;
-  /* background: rgb(207, 214, 207, 0.1); */
+  height: fit-content;
+  min-height: 700px;
+  padding-bottom: 20px;
+  padding-top: 20px;
 }
 main#showcase {
-  min-height: 400px;
-  border: grey 3px solid;
   background: rgb(207, 214, 207, 0.3);
+  border: grey 3px solid;
+  min-height: 400px;
 }
 
 #settings {
   font-variant: small-caps;
-  padding-top: 5px;
   padding-bottom: 10px;
+  padding-top: 5px;
 }
 /* Remove the arrow from the dropdown list */
 #settings select {
   -webkit-appearance: none;
   -moz-appearance: none;
+  font-family: 'Girassol', cursive;
+  font-size: 16px;
   text-indent: 1px;
   text-overflow: '';
 }
@@ -105,34 +107,32 @@ select::-ms-expand {
 }
 
 #text_Selector {
-  text-align: left;
-  border: 2px solid gold;
-  text-align: center;
-  color: black;
-  border-radius: 10px;
   background: rgb(207, 214, 207, 0.8);
+  border: 2px solid gold;
+  border-radius: 10px;
+  color: black;
   padding: 5px;
+  text-align: center;
   width: fit-content;
 }
 
 /* -------------------------------------------------------------------------- */
 
 #input_Box {
-  padding-top: 10px;
   padding-bottom: 40px;
+  padding-top: 10px;
 }
 
 #text_Details {
-  width: 80%;
-  margin: auto;
-  display: inline-block;
+  background: rgb(0, 0, 0, 0.8);
   border: 2px solid gold;
-  color: goldenrod;
-  font-size: 16px;
-  background: rgb(0, 0, 0, 0.5);
   border-radius: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  color: goldenrod;
+  display: inline-block;
+  font-size: 16px;
+  padding: 0 10px;
+  margin: auto;
+  width: 80%;
 }
 
 #text_Header {
@@ -149,28 +149,45 @@ select::-ms-expand {
 
 #citations {
   display: inline-block;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 20px;
   max-width: 90%;
 }
 
+.highlighted_Char {
+  background-color: rgb(255, 215, 0);
+  color: black;
+}
+
+.successfull_Char {
+  color: black;
+  background-color: rgb(192, 192, 192, 1);
+}
+
+.missed_Char {
+  background-color: darkred;
+}
+
 #user_input {
-  text-align: center;
+  background: rgb(207, 214, 207, 0.8);
   border: 2px solid gold;
   border-radius: 10px;
-  background: rgb(207, 214, 207, 0.8);
-  padding-top: 7px;
-  padding-bottom: 7px;
-  font-size: 14px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px;
+  padding: 10px 10px;
+  text-align: center;
 }
+
 /* hide the placeholder text when in focus */
 #user_input:focus::placeholder {
   color: transparent;
 }
 /* -------------------------------------------------------------------------- */
 .material-icons {
-  /* font-family: 'Material Icons';
+  font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px; /* Preferred icon size */
+  font-size: 24px; /* Preferred icon size
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -196,34 +213,33 @@ select::-ms-expand {
   color: green;
 }
 .material-icons.md-red {
-  color: red;
+  color: darkred;
 }
-#play_Button {
-  margin-top: 20px;
-  border: 2px solid gold;
+#start_Button {
+  align-content: center;
   background: rgba(211, 168, 27, 0.8);
   border-radius: 10px;
-  margin: auto;
-  height: auto;
-  width: fit-content;
+  border: 2px solid gold;
   display: inline-block;
-  align-content: center;
+  height: auto;
+  margin-top: 20px;
+  margin: auto;
+  width: fit-content;
 }
 /* -------------------------------------------------------------------------- */
 .statistics {
-  margin-top: 48px;
   display: inline-block;
-  /* background: rgba(0, 0, 0, 0.3); */
+  margin-bottom: 36px;
+  margin-top: 20px;
   width: fit-content;
 }
 
 .stat_Table td {
-  font-weight: bold;
   color: silver;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  font-weight: bold;
   padding-right: 20px;
   text-align: right;
-  padding: 5px;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 .stat_Table td span {
   color: gold;
