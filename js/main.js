@@ -20,9 +20,9 @@
 // The UI class handles tasks that change the way the website functions.
 class UI {
   constructor() {
-    let citations = [];
+    this.citations = [];
   }
-
+  //---------------------------------------------------------------------------
   static load_Citations() {
     const STORED_CITATIONS = [
       {
@@ -96,20 +96,27 @@ class UI {
 
     list.appendChild(OPTION);
   }
-
+  //---------------------------------------------------------------------------
   static createEventListener() {
     document
       .getElementById('text_Selector')
       .addEventListener('change', UI.getOptionVal, false);
   }
-
+  //---------------------------------------------------------------------------
   static getOptionVal(event) {
     let selection = event.target.value;
-
     console.log(selection);
 
-    let Chosen_Citation = UI.citations.find(({ title }) => title === selection);
+    if (selection != 'Select a Text...') {
+      let Chosen_Citation = UI.citations.find(
+        ({ title }) => title === selection
+      );
 
+      UI.displayCitation(Chosen_Citation);
+    }
+  }
+  //---------------------------------------------------------------------------
+  static displayCitation(Chosen_Citation) {
     document.getElementById('text_Header').innerHTML = Chosen_Citation.title;
     document.getElementById('text_Author').innerHTML = Chosen_Citation.author;
 
@@ -117,13 +124,38 @@ class UI {
 
     document.getElementById('word_Count').innerHTML = word_Counter;
 
-    console.log(word_Counter);
-  }
+    let char_Counter = UI.getCharCount(Chosen_Citation.text);
 
+    document.getElementById('char_Count').innerHTML = char_Counter;
+
+    document.getElementById('citations').innerHTML = UI.addSpan(
+      Chosen_Citation.text
+    );
+  }
+  //---------------------------------------------------------------------------
   static getWordCount(pText) {
     return pText.split(' ').length;
   }
-}
+  //---------------------------------------------------------------------------
+  static getCharCount(pText) {
+    return pText.length;
+  }
+  //---------------------------------------------------------------------------
+
+  static addSpan(text) {
+    let text_Array = text.split('');
+
+    let spanned_Text = '';
+
+    for (var i = 0; i < text_Array.length; i++) {
+      spanned_Text += `<span class='char' id="char${i}">${text_Array[i]}</span>`;
+    }
+
+    return spanned_Text;
+  }
+
+  //---------------------------------------------------------------------------
+} // End UI
 
 function start() {
   UI.load_Citations();
