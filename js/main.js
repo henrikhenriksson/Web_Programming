@@ -7,16 +7,6 @@
     Created:    2019-12-18
 */
 
-// Might come in use Later. Current implementation does not use Class objects of this type.
-// class Citation {
-//   constructor(title, author, language, text) {
-//     this.title = title;
-//     this.author = author;
-//     this.language = language;
-//     this.text = text;
-//   }
-// }
-
 // The UI class handles tasks that change the way the website functions.
 class UI {
   constructor() {
@@ -30,7 +20,7 @@ class UI {
         author: 'Erik Ström',
         language: 'swedish',
         text:
-          'Vinden viner över sällsamma ruiner, över berg och slätter, dagar som nätter.Ger världen form inför den kommande storm, likt gudars sång, skall bli dess undergång.Svart som natten, blank likt vatten, i skyn du häver då Allfader kräver.Åter resas skall nu han, som i misteln döden fann.Sonas med sin ene broder, den blinde född av samma moder.Satt att råda är de båda, bröders hand över evigt land.'
+          'Vinden viner över sällsamma ruiner, över berg och slätter, dagar som nätter. Ger världen form inför den kommande storm, likt gudars sång, skall bli dess undergång. Svart som natten, blank likt vatten, i skyn du häver då Allfader kräver. Åter resas skall nu han, som i misteln döden fann. Sonas med sin ene broder, den blinde född av samma moder. Satt att råda är de båda, bröders hand över evigt land.'
       },
       {
         title: 'Moln',
@@ -87,6 +77,7 @@ class UI {
 
     UI.citations.forEach(citation => UI.addCitationsToList(citation));
   }
+  //---------------------------------------------------------------------------
   static addCitationsToList(citation) {
     const list = document.querySelector('#text_Selector');
 
@@ -98,9 +89,20 @@ class UI {
   }
   //---------------------------------------------------------------------------
   static createEventListener() {
+    // options:
     document
       .getElementById('text_Selector')
       .addEventListener('change', UI.getOptionVal, false);
+
+    // play button:
+    document
+      .getElementById('start_Button')
+      .addEventListener('click', UI.button_Pressed, false);
+
+    // User input Dialog:
+    document
+      .getElementById('user_input')
+      .addEventListener('keypress', UI.log_Key, false);
   }
   //---------------------------------------------------------------------------
   static getOptionVal(event) {
@@ -155,8 +157,70 @@ class UI {
   }
 
   //---------------------------------------------------------------------------
-} // End UI
 
+  static button_Pressed() {
+    let current_Button = document.getElementById('play_Stop_Icon').innerHTML;
+
+    if (current_Button === 'play_arrow') {
+      UI.start_Program();
+    } else if (current_Button === 'stop') {
+      UI.stop_Program();
+    }
+  }
+  //---------------------------------------------------------------------------
+  static start_Program() {
+    document.getElementById(
+      'start_Button'
+    ).innerHTML = `<i class="material-icons md-48 md-red" id="play_Stop_Icon">stop</i>`;
+
+    document.getElementById('user_input').focus();
+
+    document.querySelectorAll('.successfull_Char').forEach(e => {
+      e.classList.remove('successfull_Char');
+    });
+
+    document.querySelectorAll('.missed_Char').forEach(e => {
+      e.classList.remove('missed_Char');
+    });
+
+    // highlight the first letter as the user presses start.
+    document.getElementById('char0').classList.add('highlighted_Char');
+  }
+  //---------------------------------------------------------------------------
+  static stop_Program() {
+    document.getElementById(
+      'start_Button'
+    ).innerHTML = `<i class="material-icons md-48 md-green" id="play_Stop_Icon">play_arrow</i>`;
+
+    document.querySelectorAll('.highlighted_Char').forEach(e => {
+      e.classList.remove('highlighted_Char');
+    });
+  }
+  //---------------------------------------------------------------------------
+
+  //---------------------------------------------------------------------------
+  static log_Key(event) {
+    let current_Input = event.key;
+
+    let current_Span = document.querySelector('.highlighted_Char');
+
+    console.log(current_Span);
+
+    if (current_Span.innerHTML === current_Input) {
+      current_Span.classList.add('successfull_Char');
+      current_Span.classList.remove('highlighted_Char');
+    } else {
+      current_Span.classList.add('missed_Char');
+      current_Span.classList.remove('highlighted_Char');
+    }
+    UI.highlight_Next();
+  }
+  static highlight_Next() {}
+
+  //---------------------------------------------------------------------------
+} // End UI
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 function start() {
   UI.load_Citations();
   UI.createEventListener();
