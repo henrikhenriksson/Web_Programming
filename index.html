@@ -43,7 +43,7 @@
         <section id="settings">
           <label id="text_Chooser_Label">Choose Text <br /></label>
           <select name="Texts" id="text_Selector">
-            <option>Select a Text...</option>
+            <!-- <option>Select a Text...</option> -->
           </select>
         </section>
 
@@ -59,7 +59,12 @@
         </section>
         <section class="user_Input_Control">
           <section id="input_Box">
-            <input type="text" id="user_input" placeholder="Type Here..." />
+            <input
+              type="text"
+              id="user_input"
+              placeholder="Type Here..."
+              readonly
+            />
           </section>
           <section id="run_Control">
             <button type="button" id="start_Button">
