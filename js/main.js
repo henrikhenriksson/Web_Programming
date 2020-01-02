@@ -10,6 +10,8 @@
 // The UI class handles tasks that change the way the website functions.
 class UI {
   constructor() {
+    this.char_Iterator = 0;
+    this.char_Counter = 0;
     this.citations = [];
   }
   //---------------------------------------------------------------------------
@@ -98,24 +100,14 @@ class UI {
     document
       .getElementById('start_Button')
       .addEventListener('click', UI.button_Pressed, false);
-
-    // User input Dialog:
-    document
-      .getElementById('user_input')
-      .addEventListener('keypress', UI.log_Key, false);
   }
   //---------------------------------------------------------------------------
   static getOptionVal(event) {
     let selection = event.target.value;
-    console.log(selection);
 
-    if (selection != 'Select a Text...') {
-      let Chosen_Citation = UI.citations.find(
-        ({ title }) => title === selection
-      );
+    let Chosen_Citation = UI.citations.find(({ title }) => title === selection);
 
-      UI.displayCitation(Chosen_Citation);
-    }
+    UI.displayCitation(Chosen_Citation);
   }
   //---------------------------------------------------------------------------
   static displayCitation(Chosen_Citation) {
@@ -126,9 +118,10 @@ class UI {
 
     document.getElementById('word_Count').innerHTML = word_Counter;
 
-    let char_Counter = UI.getCharCount(Chosen_Citation.text);
+    UI.char_Counter = UI.getCharCount(Chosen_Citation.text);
+    console.log(UI.char_Counter);
 
-    document.getElementById('char_Count').innerHTML = char_Counter;
+    document.getElementById('char_Count').innerHTML = UI.char_Counter;
 
     document.getElementById('citations').innerHTML = UI.addSpan(
       Chosen_Citation.text
@@ -157,7 +150,6 @@ class UI {
   }
 
   //---------------------------------------------------------------------------
-
   static button_Pressed() {
     let current_Button = document.getElementById('play_Stop_Icon').innerHTML;
 
@@ -173,7 +165,13 @@ class UI {
       'start_Button'
     ).innerHTML = `<i class="material-icons md-48 md-red" id="play_Stop_Icon">stop</i>`;
 
-    document.getElementById('user_input').focus();
+    let current_Input = document.getElementById('user_input');
+
+    current_Input.readOnly = false;
+
+    current_Input.addEventListener('keypress', UI.log_Key, false);
+
+    current_Input.focus();
 
     document.querySelectorAll('.successfull_Char').forEach(e => {
       e.classList.remove('successfull_Char');
@@ -183,8 +181,10 @@ class UI {
       e.classList.remove('missed_Char');
     });
 
-    // highlight the first letter as the user presses start.
-    document.getElementById('char0').classList.add('highlighted_Char');
+    UI.char_Iterator = 0;
+    document
+      .getElementById(`char${UI.char_Iterator}`)
+      .classList.add('highlighted_Char');
   }
   //---------------------------------------------------------------------------
   static stop_Program() {
@@ -192,31 +192,59 @@ class UI {
       'start_Button'
     ).innerHTML = `<i class="material-icons md-48 md-green" id="play_Stop_Icon">play_arrow</i>`;
 
+    let current_Input = document.getElementById('user_input');
+
+    current_Input.readOnly = true;
+
+    current_Input.removeEventListener('keypress', UI.log_Key, false);
+
     document.querySelectorAll('.highlighted_Char').forEach(e => {
       e.classList.remove('highlighted_Char');
     });
+    UI.char_Iterator = 0;
+    UI.clear_Input_Field();
   }
   //---------------------------------------------------------------------------
 
   //---------------------------------------------------------------------------
   static log_Key(event) {
+    UI.char_Iterator++;
+    console.log(UI.char_Iterator);
     let current_Input = event.key;
-
+    console.log(current_Input);
     let current_Span = document.querySelector('.highlighted_Char');
 
-    console.log(current_Span);
+    if (current_Input === ' ') {
+      UI.clear_Input_Field();
+    }
 
+    UI.validate_Input(current_Span, current_Input);
+
+    if (UI.char_Iterator < UI.char_Counter) {
+      UI.highlight_Next();
+    } else if (UI.char_Iterator === UI.char_Counter) {
+      UI.stop_Program();
+    }
+  }
+  //---------------------------------------------------------------------------
+  static validate_Input(current_Span, current_Input) {
     if (current_Span.innerHTML === current_Input) {
       current_Span.classList.add('successfull_Char');
-      current_Span.classList.remove('highlighted_Char');
     } else {
       current_Span.classList.add('missed_Char');
-      current_Span.classList.remove('highlighted_Char');
     }
-    UI.highlight_Next();
+    current_Span.classList.remove('highlighted_Char');
   }
-  static highlight_Next() {}
+  //---------------------------------------------------------------------------
+  static highlight_Next() {
+    document
+      .getElementById(`char${UI.char_Iterator}`)
+      .classList.add('highlighted_Char');
+  }
 
+  static clear_Input_Field() {
+    document.getElementById('user_input').value = '';
+  }
   //---------------------------------------------------------------------------
 } // End UI
 //---------------------------------------------------------------------------
