@@ -7,15 +7,18 @@
     Created:    2019-12-18
 */
 
-// The UI class handles tasks that change the way the website functions.
+// The UI class handles tasks that change the way the website functions. The functions are declared as static. That way they can be called independently.
 class UI {
   constructor() {
     this.char_Iterator = 0;
     this.char_Counter = 0;
+    this.error_Counter = 0;
     this.citations = [];
+    this.start_Time = 0;
   }
   //---------------------------------------------------------------------------
   static load_Citations() {
+    // to be changed for higher grades.
     const STORED_CITATIONS = [
       {
         title: 'Förändingens Tid',
@@ -74,12 +77,15 @@ class UI {
           'May the gods grant you all things which your heart desires, and may they give you a husband and a home and gracious concord, for there is nothing greater and better than this - when a husband and wife keep a household in oneness of mind, a great woe to their enemies and joy to their friends, and win high renown.'
       }
     ];
-    //Add the stored citations to the array.
+    // Add the stored citations to the array.
     UI.citations = STORED_CITATIONS;
 
+    // add the citations to the options menu for seleciton.
     UI.citations.forEach(citation => UI.addCitationsToList(citation));
   }
   //---------------------------------------------------------------------------
+  // This function finds the element with the text_selector id and creates options with value and text from the citation Object.
+  // @param citation a citiation object.
   static addCitationsToList(citation) {
     const list = document.querySelector('#text_Selector');
 
@@ -90,6 +96,7 @@ class UI {
     list.appendChild(OPTION);
   }
   //---------------------------------------------------------------------------
+  // Create event listeners for when the user selects a citation and for when the play button is pressed.
   static createEventListener() {
     // options:
     document
@@ -102,6 +109,7 @@ class UI {
       .addEventListener('click', UI.button_Pressed, false);
   }
   //---------------------------------------------------------------------------
+  // Function called by the eventlistener for the text_Selector tag. Searches available citations for the chosen one based on the tag title.
   static getOptionVal(event) {
     let selection = event.target.value;
 
@@ -110,6 +118,8 @@ class UI {
     UI.displayCitation(Chosen_Citation);
   }
   //---------------------------------------------------------------------------
+  // DIsplay the selected citation in the text_Details section. Calls sub functions to calculate total words and characters of the selected citation.
+  // Calls sub function to add spans to each indivudual char.
   static displayCitation(Chosen_Citation) {
     document.getElementById('text_Header').innerHTML = Chosen_Citation.title;
     document.getElementById('text_Author').innerHTML = Chosen_Citation.author;
@@ -118,30 +128,39 @@ class UI {
 
     document.getElementById('word_Count').innerHTML = word_Counter;
 
-    UI.char_Counter = UI.getCharCount(Chosen_Citation.text);
-    console.log(UI.char_Counter);
-
-    document.getElementById('char_Count').innerHTML = UI.char_Counter;
+    document.getElementById('char_Count').innerHTML = UI.getCharCount(
+      Chosen_Citation.text
+    );
 
     document.getElementById('citations').innerHTML = UI.addSpan(
       Chosen_Citation.text
     );
   }
   //---------------------------------------------------------------------------
+  // Return the total word count by splitting the text array by spaces.
+  // @param pText an array containing the selected citation.
   static getWordCount(pText) {
     return pText.split(' ').length;
   }
   //---------------------------------------------------------------------------
+  // Set the instance variable char_Counter to the total lenght of the text array, including spaces.
+  // @param pText an array containgin the selected citation.
+  // @return an updated UI.char_Counter.
   static getCharCount(pText) {
-    return pText.length;
+    UI.char_Counter = pText.length;
+
+    return UI.char_Counter;
   }
   //---------------------------------------------------------------------------
-
+  // Add spans to each individual char in the selected text by splitting a text array by char
+  // @param text, the selected text as a string.
+  // @return spanned_Text, a string holding the input parameter text with added span tags.
   static addSpan(text) {
     let text_Array = text.split('');
 
     let spanned_Text = '';
 
+    // loop through the split text array and add span tag to each index.
     for (var i = 0; i < text_Array.length; i++) {
       spanned_Text += `<span class='char' id="char${i}">${text_Array[i]}</span>`;
     }
@@ -150,6 +169,7 @@ class UI {
   }
 
   //---------------------------------------------------------------------------
+  // Function called by the eventlistener, checks wether the test is currently running or not, initializes appropriate function.
   static button_Pressed() {
     let current_Button = document.getElementById('play_Stop_Icon').innerHTML;
 
@@ -160,18 +180,27 @@ class UI {
     }
   }
   //---------------------------------------------------------------------------
+  // Called when the user presses the start button. Starts the test and initializes counters to starting values.
   static start_Program() {
+    // Change the button:
     document.getElementById(
       'start_Button'
     ).innerHTML = `<i class="material-icons md-48 md-red" id="play_Stop_Icon">stop</i>`;
 
+    // Set the readOnly value to false to enable typing in the input box.
     let current_Input = document.getElementById('user_input');
-
     current_Input.readOnly = false;
 
+    // set focus to the input box.
+    current_Input.focus();
+
+    // add event listener to log each key the user presses.
     current_Input.addEventListener('keypress', UI.log_Key, false);
 
-    current_Input.focus();
+    // Set initial values for time, errors, successfull and missed chars.
+    UI.start_Time = new Date().getTime();
+    UI.error_Counter = 0;
+    UI.char_Iterator = 0;
 
     document.querySelectorAll('.successfull_Char').forEach(e => {
       e.classList.remove('successfull_Char');
@@ -181,77 +210,116 @@ class UI {
       e.classList.remove('missed_Char');
     });
 
-    UI.char_Iterator = 0;
+    // Add highlight to the first char.
     document
       .getElementById(`char${UI.char_Iterator}`)
       .classList.add('highlighted_Char');
   }
   //---------------------------------------------------------------------------
+
+  // function called by the user by pressing the stop button, or automatically called when the test is finished.
   static stop_Program() {
+    // Set button to play arrow.
     document.getElementById(
       'start_Button'
     ).innerHTML = `<i class="material-icons md-48 md-green" id="play_Stop_Icon">play_arrow</i>`;
 
     let current_Input = document.getElementById('user_input');
 
+    // Set the input box to readonly again to disable typing after the test has stopped.
     current_Input.readOnly = true;
 
+    // remove event listener for key presses as we no longer care what the user presses.
     current_Input.removeEventListener('keypress', UI.log_Key, false);
 
+    // remmove any highlight if user pressed stop.
     document.querySelectorAll('.highlighted_Char').forEach(e => {
       e.classList.remove('highlighted_Char');
     });
-    UI.char_Iterator = 0;
+
     UI.clear_Input_Field();
   }
   //---------------------------------------------------------------------------
 
   //---------------------------------------------------------------------------
+  // Function called by event listener to log each keypress.
   static log_Key(event) {
+    // update the char iterator as soon as a button is pressed.
     UI.char_Iterator++;
-    console.log(UI.char_Iterator);
+
+    // find the actual button key value. eg. "V"
     let current_Input = event.key;
-    console.log(current_Input);
+
+    // find the currently highlighted char
     let current_Span = document.querySelector('.highlighted_Char');
 
+    // call function to clear the input field if the user has pressed space.
     if (current_Input === ' ') {
       UI.clear_Input_Field();
     }
 
+    // validate the input char
     UI.validate_Input(current_Span, current_Input);
 
+    // highlight the next char if not the last char in the citation.
     if (UI.char_Iterator < UI.char_Counter) {
       UI.highlight_Next();
     } else if (UI.char_Iterator === UI.char_Counter) {
       UI.stop_Program();
     }
+
+    UI.update_Statistics();
   }
   //---------------------------------------------------------------------------
+  // check the current span vs current input. If they are the same, add succes, otherwise add miss and update error counter. Always remove highlight from the current char.
   static validate_Input(current_Span, current_Input) {
     if (current_Span.innerHTML === current_Input) {
       current_Span.classList.add('successfull_Char');
     } else {
       current_Span.classList.add('missed_Char');
+      UI.error_Counter++;
     }
     current_Span.classList.remove('highlighted_Char');
   }
   //---------------------------------------------------------------------------
+  // Highlight the next char based on the char_iterators current position.
   static highlight_Next() {
     document
       .getElementById(`char${UI.char_Iterator}`)
       .classList.add('highlighted_Char');
   }
-
+  //---------------------------------------------------------------------------
+  // clera the input field by setting it to an empty value.
   static clear_Input_Field() {
     document.getElementById('user_input').value = '';
   }
   //---------------------------------------------------------------------------
+  // uses advanced commando maths to calculate time elapsed, gross wpm, net wpm and accuracy with each keypress the user makes.
+  static update_Statistics() {
+    // time elapsed in minutes.
+    let time_Elapsed = (new Date().getTime() - UI.start_Time) / 1000 / 60;
+
+    let gross_WPM = UI.char_Iterator / 5 / time_Elapsed;
+
+    let net_WPM = gross_WPM - UI.error_Counter / time_Elapsed;
+
+    let accuracy = (UI.char_Iterator - UI.error_Counter) / UI.char_Counter;
+
+    // present the statistics to the user.
+    document.getElementById('GWPMD').innerHTML = Math.round(gross_WPM);
+    document.getElementById('NWPMD').innerHTML = Math.round(net_WPM);
+    document.getElementById('acc_Data').innerHTML = Math.round(accuracy * 100);
+    document.getElementById('error_Data').innerHTML = UI.error_Counter;
+  }
+
+  //---------------------------------------------------------------------------
 } // End UI
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
+// Start function loading the citations and creating initial event listeners.
 function start() {
   UI.load_Citations();
   UI.createEventListener();
 }
-
+// Make sure the entire page has loaded before calling the start function.
 window.addEventListener('load', start, false);
