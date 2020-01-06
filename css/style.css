@@ -7,7 +7,9 @@
     Created:    2019-12-18
 */
 
+/* -------------------------------------------------------------------------- */
 /* import font families from local folder. */
+/* -------------------------------------------------------------------------- */
 @font-face {
   font-family: 'Ubuntu';
   font-weight: 400;
@@ -25,6 +27,17 @@
   font-weight: 400;
   font-style: normal;
   src: local('Exo2'), url('../font/Exo_2/Exo2-Regular.ttf');
+}
+/* -------------------------------------------------------------------------- */
+/* Header animation: */
+/* -------------------------------------------------------------------------- */
+@keyframes setColor {
+  from {
+    color: gold;
+  }
+  to {
+    color: silver;
+  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -64,11 +77,22 @@ header #brand {
   margin-bottom: 10px;
   margin-top: 0;
   padding-left: 0;
+  animation-name: setColor;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
 }
+
 header .highlight {
   color: silver;
   font-size: 48px;
   font-variant: small-caps;
+  animation-name: setColor;
+  animation-duration: 4s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
 }
 
 header #logo {
