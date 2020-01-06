@@ -276,12 +276,26 @@ class UI {
   //---------------------------------------------------------------------------
   // check the current span vs current input. If they are the same, add succes, otherwise add miss and update error counter. Always remove highlight from the current char.
   static validate_Input(current_Span, current_Input) {
-    if (current_Span.innerHTML.toUpperCase() === current_Input.toUpperCase()) {
-      current_Span.classList.add('successfull_Char');
+    let ignore_Case = document.getElementById('casing').checked;
+
+    if (ignore_Case) {
+      if (
+        current_Span.innerHTML.toUpperCase() === current_Input.toUpperCase()
+      ) {
+        current_Span.classList.add('successfull_Char');
+      } else {
+        current_Span.classList.add('missed_Char');
+        UI.error_Counter++;
+        new Audio('./audio/Error.wav').play();
+      }
     } else {
-      current_Span.classList.add('missed_Char');
-      UI.error_Counter++;
-      new Audio('./audio/Error.wav').play();
+      if (current_Span.innerHTML === current_Input) {
+        current_Span.classList.add('successfull_Char');
+      } else {
+        current_Span.classList.add('missed_Char');
+        UI.error_Counter++;
+        new Audio('./audio/Error.wav').play();
+      }
     }
 
     current_Span.classList.remove('highlighted_Char');
