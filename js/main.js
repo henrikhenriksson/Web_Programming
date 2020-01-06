@@ -182,6 +182,7 @@ class UI {
   //---------------------------------------------------------------------------
   // Called when the user presses the start button. Starts the test and initializes counters to starting values.
   static start_Program() {
+    new Audio('./audio/QuestNew.wav').play();
     // Change the button:
     document.getElementById(
       'start_Button'
@@ -201,6 +202,7 @@ class UI {
     UI.start_Time = new Date().getTime();
     UI.error_Counter = 0;
     UI.char_Iterator = 0;
+    UI.reset_Statistics();
 
     document.querySelectorAll('.successfull_Char').forEach(e => {
       e.classList.remove('successfull_Char');
@@ -219,6 +221,7 @@ class UI {
 
   // function called by the user by pressing the stop button, or automatically called when the test is finished.
   static stop_Program() {
+    new Audio('./audio/GoodJob.wav').play();
     // Set button to play arrow.
     document.getElementById(
       'start_Button'
@@ -273,12 +276,14 @@ class UI {
   //---------------------------------------------------------------------------
   // check the current span vs current input. If they are the same, add succes, otherwise add miss and update error counter. Always remove highlight from the current char.
   static validate_Input(current_Span, current_Input) {
-    if (current_Span.innerHTML === current_Input) {
+    if (current_Span.innerHTML.toUpperCase() === current_Input.toUpperCase()) {
       current_Span.classList.add('successfull_Char');
     } else {
       current_Span.classList.add('missed_Char');
       UI.error_Counter++;
+      new Audio('./audio/Error.wav').play();
     }
+
     current_Span.classList.remove('highlighted_Char');
   }
   //---------------------------------------------------------------------------
@@ -303,13 +308,21 @@ class UI {
 
     let net_WPM = gross_WPM - UI.error_Counter / time_Elapsed;
 
-    let accuracy = (UI.char_Iterator - UI.error_Counter) / UI.char_Counter;
+    let accuracy = (UI.char_Iterator - UI.error_Counter) / UI.char_Iterator;
 
     // present the statistics to the user.
     document.getElementById('GWPMD').innerHTML = Math.round(gross_WPM);
     document.getElementById('NWPMD').innerHTML = Math.round(net_WPM);
     document.getElementById('acc_Data').innerHTML = Math.round(accuracy * 100);
     document.getElementById('error_Data').innerHTML = UI.error_Counter;
+  }
+  //---------------------------------------------------------------------------
+  // reset the statistics on start.
+  static reset_Statistics() {
+    document.getElementById('GWPMD').innerHTML = 0;
+    document.getElementById('NWPMD').innerHTML = 0;
+    document.getElementById('acc_Data').innerHTML = 0;
+    document.getElementById('error_Data').innerHTML = 0;
   }
 
   //---------------------------------------------------------------------------
