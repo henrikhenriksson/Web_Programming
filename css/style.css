@@ -6,6 +6,27 @@
     Version:    1.0
     Created:    2019-12-18
 */
+
+/* import font families from local folder. */
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 400;
+  font-style: normal;
+  src: local('Ubuntu'), url('../font/Ubuntu/Ubuntu-Regular.ttf');
+}
+@font-face {
+  font-family: 'Girassol';
+  font-weight: 400;
+  font-style: normal;
+  src: local('Girassol'), url('../font/Girassol/Girassol-Regular.ttf');
+}
+@font-face {
+  font-family: 'Exo_2';
+  font-weight: 400;
+  font-style: normal;
+  src: local('Exo2'), url('../font/Exo_2/Exo2-Regular.ttf');
+}
+
 /* -------------------------------------------------------------------------- */
 /* main html and body */
 /* -------------------------------------------------------------------------- */
