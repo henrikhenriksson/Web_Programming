@@ -139,10 +139,6 @@ main#showcase {
   padding-top: 5px;
 }
 
-#casing {
-  background: gold;
-}
-
 /* Remove the arrow from the dropdown list */
 #settings select {
   -webkit-appearance: none;
@@ -210,12 +206,14 @@ select::-ms-expand {
 }
 
 .successfull_Char {
-  color: black;
-  background-color: rgb(192, 192, 192, 1);
+  /* color: black;
+  background-color: rgb(192, 192, 192, 1); */
+  color: rgb(192, 192, 192, 1);
 }
 
 .missed_Char {
-  background-color: darkred;
+  /* background-color: darkred; */
+  color: darkred;
 }
 
 #user_input {
