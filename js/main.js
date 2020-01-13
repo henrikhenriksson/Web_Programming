@@ -114,9 +114,12 @@ class UI {
 
     let languages = document.querySelectorAll('input[name="language"]');
 
-    languages.forEach(addEventListener('click', UI.language_selected, false));
+    languages.forEach(language =>
+      addEventListener('click', UI.language_selected, false)
+    );
   }
   //---------------------------------------------------------------------------
+  // Function called when a language is selected in the radial input. Clear the list from any present entries and add the ones corresponding to selected language.
   static language_selected() {
     let selected_Lang = document.querySelector('input[name="language"]:checked')
       .value;
@@ -197,12 +200,18 @@ class UI {
   //---------------------------------------------------------------------------
   // Function called by the eventlistener, checks wether the test is currently running or not, initializes appropriate function.
   static button_Pressed() {
-    let current_Button = document.getElementById('play_Stop_Icon').innerHTML;
+    let text_is_selected = document.getElementById('citations').innerHTML
+      .length;
 
-    if (current_Button === 'play_arrow') {
-      UI.start_Program();
-    } else if (current_Button === 'stop') {
-      UI.stop_Program();
+    console.log('text is selected: ' + text_is_selected);
+    if (text_is_selected) {
+      let current_Button = document.getElementById('play_Stop_Icon').innerHTML;
+
+      if (current_Button === 'play_arrow') {
+        UI.start_Program();
+      } else if (current_Button === 'stop') {
+        UI.stop_Program();
+      }
     }
   }
   //---------------------------------------------------------------------------
