@@ -21,10 +21,6 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-    <!-- <link
-      href="https://fonts.googleapis.com/css?family=Exo+2|Girassol|Ubuntu&display=swap"
-      rel="stylesheet"
-    /> -->
     <title>Project Touch</title>
   </head>
   <body>
@@ -41,13 +37,26 @@
     <main>
       <section id="showcase">
         <section id="settings">
+          <section id="language">
+            <input
+              type="radio"
+              name="language"
+              id="swedish"
+              value="swedish"
+              checked
+            />
+            <label for="swedish">Swedish</label>
+            <input type="radio" name="language" id="english" value="english" />
+            <label for="english">English</label>
+          </section>
+
           <section id="check">
             <input type="checkbox" id="casing" name="ignore_Case" />
-            <label for="ignore_Case">Ignore Case</label>
+            <label for="casing">Ignore Case</label>
           </section>
           <label id="text_Chooser_Label">Choose Text <br /></label>
           <select name="Texts" id="text_Selector">
-            <!-- <option>Select a Text...</option> -->
+            <option id="option_Info">Select a Text...</option>
           </select>
         </section>
 
