@@ -81,20 +81,24 @@ class UI {
     UI.citations = STORED_CITATIONS;
 
     // add the citations to the options menu for seleciton.
-    UI.citations.forEach(citation => UI.addCitationsToList(citation));
+    //   UI.citations.forEach(citation => UI.addCitationsToList(citation));
   }
   //---------------------------------------------------------------------------
+
   // This function finds the element with the text_selector id and creates options with value and text from the citation Object.
   // @param citation a citiation object.
-  static addCitationsToList(citation) {
-    const list = document.querySelector('#text_Selector');
+  static addCitationsToList(citation, selected_Language) {
+    let list = document.querySelector('#text_Selector');
 
-    const OPTION = document.createElement('option');
-    OPTION.value = citation.title;
-    OPTION.text = citation.title;
+    if (selected_Language === citation.language) {
+      const OPTION = document.createElement('option');
+      OPTION.value = citation.title;
+      OPTION.text = citation.title;
 
-    list.appendChild(OPTION);
+      list.appendChild(OPTION);
+    }
   }
+
   //---------------------------------------------------------------------------
   // Create event listeners for when the user selects a citation and for when the play button is pressed.
   static createEventListener() {
@@ -107,7 +111,29 @@ class UI {
     document
       .getElementById('start_Button')
       .addEventListener('click', UI.button_Pressed, false);
+
+    let languages = document.querySelectorAll('input[name="language"]');
+
+    languages.forEach(addEventListener('click', UI.language_selected, false));
   }
+  //---------------------------------------------------------------------------
+  static language_selected() {
+    let selected_Lang = document.querySelector('input[name="language"]:checked')
+      .value;
+
+    let list = document.querySelector('#text_Selector');
+
+    while (list.length > 1) {
+      list.remove(1);
+    }
+
+    UI.citations.forEach(citation =>
+      UI.addCitationsToList(citation, selected_Lang)
+    );
+  }
+
+  //---------------------------------------------------------------------------
+
   //---------------------------------------------------------------------------
   // Function called by the eventlistener for the text_Selector tag. Searches available citations for the chosen one based on the tag title.
   static getOptionVal(event) {
@@ -118,7 +144,7 @@ class UI {
     UI.displayCitation(Chosen_Citation);
   }
   //---------------------------------------------------------------------------
-  // DIsplay the selected citation in the text_Details section. Calls sub functions to calculate total words and characters of the selected citation.
+  // Display the selected citation in the text_Details section. Calls sub functions to calculate total words and characters of the selected citation.
   // Calls sub function to add spans to each indivudual char.
   static displayCitation(Chosen_Citation) {
     document.getElementById('text_Header').innerHTML = Chosen_Citation.title;
