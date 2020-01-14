@@ -6,10 +6,13 @@
     Version:    1.0
     Created:    2019-12-18
 */
+
+// Global variable accessable by both classes as i heard on the forums that this was ok.
 let file_Citations = [];
 
 // The FileLoader class will handle the loading of the UI texts from file.
 class FileLoader {
+  // empty constructor
   constructor() {}
   static loadTexts() {
     let xhr = new XMLHttpRequest();
@@ -19,10 +22,13 @@ class FileLoader {
       if (this.status == 200) {
         // console.log(this.responseText);
         file_Citations = JSON.parse(this.responseText);
+      } else if (this.status == 404) {
+        document.getElementById('citations').innerHTML =
+          '404 not found error: Could not load file Texts.Json';
       }
     };
     xhr.onerror = function() {
-      console.log('Request Error');
+      console.log('Request Error: Could not load file Texts.Json');
     };
 
     xhr.send();
@@ -278,7 +284,6 @@ class UI {
   // check the current span vs current input. If they are the same, add succes, otherwise add miss and update error counter. Always remove highlight from the current char.
   static validate_Input(current_Span, current_Input) {
     let ignore_Case = document.getElementById('casing').checked;
-
     if (ignore_Case) {
       if (
         current_Span.innerHTML.toUpperCase() === current_Input.toUpperCase()
@@ -286,6 +291,7 @@ class UI {
         current_Span.classList.add('successfull_Char');
       } else {
         current_Span.classList.add('missed_Char');
+
         UI.error_Counter++;
         new Audio('./audio/Error.wav').play();
       }
