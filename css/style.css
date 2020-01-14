@@ -12,20 +12,20 @@
 /* -------------------------------------------------------------------------- */
 @font-face {
   font-family: 'Ubuntu';
-  font-weight: 400;
   font-style: normal;
+  font-weight: 400;
   src: local('Ubuntu'), url('../font/Ubuntu/Ubuntu-Regular.ttf');
 }
 @font-face {
   font-family: 'Girassol';
-  font-weight: 400;
   font-style: normal;
+  font-weight: 400;
   src: local('Girassol'), url('../font/Girassol/Girassol-Regular.ttf');
 }
 @font-face {
   font-family: 'Exo_2';
-  font-weight: 400;
   font-style: normal;
+  font-weight: 400;
   src: local('Exo2'), url('../font/Exo_2/Exo2-Regular.ttf');
 }
 /* -------------------------------------------------------------------------- */
@@ -48,15 +48,15 @@ html {
 }
 
 body {
-  min-height: 100%;
-  font-family: 'Girassol', cursive;
-  position: relative;
-  max-width: 600px;
-  margin: auto;
-  text-align: center;
+  background-attachment: fixed;
   background-image: url(../img/background.jpg);
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  font-family: 'Girassol', cursive;
+  margin: auto;
+  max-width: 600px;
+  min-height: 100%;
+  position: relative;
+  text-align: center;
 }
 /* -------------------------------------------------------------------------- */
 /* header section */
@@ -64,35 +64,35 @@ body {
 header {
   border-bottom: darkgrey 3px solid;
   min-height: 70px;
-  padding-top: 30px;
   padding-bottom: 30px;
+  padding-top: 30px;
 }
 
 header #brand {
-  display: inline-block;
+  animation-duration: 4s;
+  animation-direction: alternate;
+  animation-name: setColor;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
   color: gold;
-  font-variant: small-caps;
+  display: inline-block;
   font-family: 'Exo 2', sans-serif;
   font-size: 36px;
+  font-variant: small-caps;
   margin-bottom: 10px;
   margin-top: 0;
   padding-left: 0;
-  animation-name: setColor;
-  animation-duration: 4s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
 }
 
 header .highlight {
+  animation-duration: 4s;
+  animation-direction: alternate-reverse;
+  animation-name: setColor;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
   color: silver;
   font-size: 48px;
   font-variant: small-caps;
-  animation-name: setColor;
-  animation-duration: 4s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: alternate-reverse;
 }
 
 header #logo {
@@ -127,11 +127,11 @@ main {
   padding-bottom: 20px;
   padding-top: 20px;
 }
-main#showcase {
+/* #showcase {
   background: rgb(207, 214, 207, 0.3);
   border: grey 3px solid;
   min-height: 400px;
-}
+} */
 
 #settings {
   font-variant: small-caps;
@@ -176,8 +176,8 @@ select::-ms-expand {
   color: goldenrod;
   display: inline-block;
   font-size: 16px;
-  padding: 0 10px;
   margin: auto;
+  padding: 0 10px;
   width: 80%;
 }
 
@@ -206,26 +206,23 @@ select::-ms-expand {
 }
 
 .successfull_Char {
-  /* color: black;
-  background-color: rgb(192, 192, 192, 1); */
-  color: rgb(192, 192, 192, 1);
+  color: rgb(192, 192, 192);
 }
 
 .missed_Char {
-  /* background-color: darkred; */
-  color: darkred;
+  background-color: rgb(0, 0, 0);
+  color: rgb(139, 0, 0);
 }
 
 #user_input {
   background: rgb(207, 214, 207, 0.8);
-  border: 2px solid gold;
+  border: 2px solid rgb(255, 215, 0);
   border-radius: 10px;
   font-family: 'Ubuntu', sans-serif;
   font-size: 16px;
   padding: 10px 10px;
   text-align: center;
 }
-
 /* hide the placeholder text when in focus */
 #user_input:focus::placeholder {
   color: transparent;
@@ -233,16 +230,10 @@ select::-ms-expand {
 /* -------------------------------------------------------------------------- */
 .material-icons {
   font-family: 'Material Icons';
-  font-weight: normal;
   font-style: normal;
+  font-weight: normal;
   font-size: 24px; /* Preferred icon size
-  display: inline-block;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: normal;
-  word-wrap: normal;
-  white-space: nowrap;
-  direction: ltr;
+  
   /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;
   /* Support for Safari and Chrome. */
@@ -266,12 +257,12 @@ select::-ms-expand {
 #start_Button {
   align-content: center;
   background: rgba(211, 168, 27, 0.8);
-  border-radius: 10px;
   border: 2px solid gold;
+  border-radius: 10px;
   display: inline-block;
   height: auto;
-  margin-top: 20px;
   margin: auto;
+  margin-top: 20px;
   width: fit-content;
 }
 /* -------------------------------------------------------------------------- */
