@@ -7,7 +7,7 @@
     Created:    2019-12-18
 */
 
-// Global variable accessable by both classes as i heard on the forums that this was ok.
+// Global variable accessable by both classes.
 let file_Citations = [];
 
 // The FileLoader class will handle the loading of the UI texts from file.
@@ -15,47 +15,45 @@ class FileLoader {
   // empty constructor
   constructor() {}
   static loadTexts() {
+    // Create the XHR object:
     let xhr = new XMLHttpRequest();
+    // Open get command fetches the information from the URI, the boolean sets asynchronous true or false. False is chosen here as the text will otherwise sometimes fail to load.
     xhr.open('GET', 'Texts.json', false);
 
+    // status 200 indicates success, if so - parse the json file to an array containing citation objects. 404 indicates file not found failure.
     xhr.onload = function() {
       if (this.status == 200) {
-        // console.log(this.responseText);
         file_Citations = JSON.parse(this.responseText);
       } else if (this.status == 404) {
         document.getElementById('citations').innerHTML =
           '404 not found error: Could not load file Texts.Json';
       }
     };
+    // on any other error.
     xhr.onerror = function() {
-      console.log('Request Error: Could not load file Texts.Json');
+      document.getElementById('citations').innerHTML =
+        'Error handling request. File could not be loaded.';
     };
 
+    // Send the request.
     xhr.send();
   }
 } //End FileLoader
 //---------------------------------------------------------------------------
-
+//---------------------------------------------------------------------------
 // The UI class handles tasks that change the way the website functions. The functions are declared as static. That way they can be called independently.
 class UI {
   constructor() {
     this.char_Iterator = 0;
     this.char_Counter = 0;
     this.error_Counter = 0;
-    this.citations = [];
     this.start_Time = 0;
   }
   //---------------------------------------------------------------------------
-  static load_Citations() {
-    // to be changed for higher grades.
-
-    FileLoader.loadTexts();
-    UI.citations = file_Citations;
-  }
   //---------------------------------------------------------------------------
-
   // This function finds the element with the text_selector id and creates options with value and text from the citation Object.
   // @param citation a citiation object.
+  // @param selected_Language, the currently selected language.
   static addCitationsToList(citation, selected_Language) {
     let list = document.querySelector('#text_Selector');
 
@@ -69,7 +67,7 @@ class UI {
   }
 
   //---------------------------------------------------------------------------
-  // Create event listeners for when the user selects a citation and for when the play button is pressed.
+  // Create event listeners for when the user selects a citation, for when the play button is pressed, and when the language radial input is changed.
   static createEventListener() {
     // options:
     document
@@ -95,13 +93,11 @@ class UI {
 
     let list = document.querySelector('#text_Selector');
 
+    // empty the list of any current contents.
     while (list.length > 1) {
       list.remove(1);
     }
 
-    // UI.citations.forEach(citation =>
-    //   UI.addCitationsToList(citation, selected_Lang)
-    // );
     file_Citations.forEach(citation =>
       UI.addCitationsToList(citation, selected_Lang)
     );
@@ -149,7 +145,6 @@ class UI {
   // @return an updated UI.char_Counter.
   static getCharCount(pText) {
     UI.char_Counter = pText.length;
-
     return UI.char_Counter;
   }
   //---------------------------------------------------------------------------
@@ -158,14 +153,12 @@ class UI {
   // @return spanned_Text, a string holding the input parameter text with added span tags.
   static addSpan(text) {
     let text_Array = text.split('');
-
     let spanned_Text = '';
 
     // loop through the split text array and add span tag to each index.
     for (var i = 0; i < text_Array.length; i++) {
       spanned_Text += `<span class='char' id="char${i}">${text_Array[i]}</span>`;
     }
-
     return spanned_Text;
   }
 
@@ -175,7 +168,6 @@ class UI {
     let text_is_selected = document.getElementById('citations').innerHTML
       .length;
 
-    console.log('text is selected: ' + text_is_selected);
     if (text_is_selected) {
       let current_Button = document.getElementById('play_Stop_Icon').innerHTML;
 
@@ -277,13 +269,14 @@ class UI {
     } else if (UI.char_Iterator === UI.char_Counter) {
       UI.stop_Program();
     }
-
+    // update statistics after each keylog.
     UI.update_Statistics();
   }
   //---------------------------------------------------------------------------
   // check the current span vs current input. If they are the same, add succes, otherwise add miss and update error counter. Always remove highlight from the current char.
   static validate_Input(current_Span, current_Input) {
     let ignore_Case = document.getElementById('casing').checked;
+    // first check if the ignore case sensitive has been checked:
     if (ignore_Case) {
       if (
         current_Span.innerHTML.toUpperCase() === current_Input.toUpperCase()
@@ -291,7 +284,6 @@ class UI {
         current_Span.classList.add('successfull_Char');
       } else {
         current_Span.classList.add('missed_Char');
-
         UI.error_Counter++;
         new Audio('./audio/Error.wav').play();
       }
@@ -304,7 +296,6 @@ class UI {
         new Audio('./audio/Error.wav').play();
       }
     }
-
     current_Span.classList.remove('highlighted_Char');
   }
   //---------------------------------------------------------------------------
@@ -351,9 +342,9 @@ class UI {
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
-// Start function loading the citations and creating initial event listeners.
+// Called after the document has finished loading. Calls functions to load the citations and initialize eventlisteners.
 function start() {
-  UI.load_Citations();
+  FileLoader.loadTexts();
   UI.createEventListener();
 }
 // Make sure the entire page has loaded before calling the start function.
