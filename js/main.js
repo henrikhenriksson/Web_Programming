@@ -110,7 +110,9 @@ class UI {
   static getOptionVal(event) {
     let selection = event.target.value;
 
-    let Chosen_Citation = UI.citations.find(({ title }) => title === selection);
+    let Chosen_Citation = file_Citations.find(
+      ({ title }) => title === selection
+    );
 
     UI.displayCitation(Chosen_Citation);
   }
