@@ -11,6 +11,7 @@
 
 <html lang="en">
   <head>
+    <!-- Head section containing meta information, stylesheet and script links. -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -25,6 +26,7 @@
   </head>
   <body>
     <header>
+      <!-- Header divided into logo, brand and a highlight section for headline animation-->
       <img
         src="./img/logo.png"
         alt="Logo picture of an abstract keyboard"
@@ -34,8 +36,11 @@
         <h1><span class="highlight">Touch</span>Typing</h1>
       </section>
     </header>
+    <!-- Main -->
     <main>
+      <!-- Webpage showcase: -->
       <section id="showcase">
+        <!-- settings section containing language radio- and case insensitive checkboxes. -->
         <section id="settings">
           <section id="language">
             <input
@@ -58,6 +63,7 @@
             <option id="option_Info">Select a Text...</option>
           </select>
         </section>
+        <!-- Section containing information about the selected text, is updated dynamically -->
         <section id="text_Details">
           <h1 id="text_Header"></h1>
           <p id="text_Author"></p>
@@ -65,8 +71,10 @@
             (<span id="word_Count"></span> Words,
             <span id="char_Count"></span> Chars)
           </p>
+          <!-- The text-citation is presented here. -->
           <p id="citations"></p>
         </section>
+        <!-- The user enters letters in this section -->
         <section class="user_Input_Control">
           <section id="input_Box">
             <input
@@ -76,6 +84,7 @@
               readonly
             />
           </section>
+          <!-- Start and stop button -->
           <section id="run_Control">
             <button type="button" id="start_Button">
               <i class="material-icons md-48 md-green" id="play_Stop_Icon"
@@ -83,6 +92,7 @@
               >
             </button>
           </section>
+          <!-- Section containing statistics, presented in a table -->
           <section class="statistics">
             <table class="stat_Table">
               <tr>
